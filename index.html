@@ -10,11 +10,32 @@
 </head>
 <body>
   <div class="main">
-    <div style="font-size: 80px;">Time until the Snoikerz 2025 Minecraft server EXPLODES</div>
+    <div style="font-size: 80px;">Time until the Snoikerz 2025 Minecraft server <span class="explode">EXPLODES</span></div>
     <p id="timer" style="color: #ac4147; font-size: 100px;"></p>
   </div>
 </body>
 </html>
+
+<audio src="public\explode.mp3" id="sound" preload="auto"></audio>
+
+<script>
+  const box = document.querySelectorAll(".explode");
+
+box.forEach((box) => {
+  const el = box;
+  el.addEventListener("click", () => {
+    const original = document.getElementById(
+      "sound",
+    );
+    if (original) {
+      const clone = original.cloneNode(true);
+      clone.volume = 0.5;
+      clone?.play();
+    }
+  });
+});
+
+</script>
 
 <style>
 .main{
