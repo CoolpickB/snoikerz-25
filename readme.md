@@ -1,1 +1,1 @@
-### A [website](coolpickb.github.io/snoikerz-25) for me and my friends for our Minecraft server.
+### A [website](https://coolpickb.github.io/snoikerz-25) for me and my friends for our Minecraft server.
