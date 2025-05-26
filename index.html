@@ -3,10 +3,73 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" type="image/x-icon" href="/public/favicon.ico">
-  <title>Document</title>
+  <link rel="icon" type="image/x-icon" href="public\favicon.ico">
+  <link rel="stylesheet" href="reset.css" />
+  <link href='https://fonts.googleapis.com/css?family=Kreon' rel='stylesheet'>
+  <title>Snoikerz 25</title>
 </head>
 <body>
-  
+  <div class="main">
+    <div style="font-size: 80px;">Time until the Snoikerz 2025 Minecraft server EXPLODES</div>
+    <p id="timer" style="color: #ac4147; font-size: 100px;"></p>
+  </div>
+</body>
+</html>
+
+<style>
+.main{
+  background-color: #15090a;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Kreon';
+  color: #e4b6b9;
+  flex-direction: column;
+  gap: 50px;
+}
+</style>
+
+<!-- Speed Control -->
+<input type="number" id="speedInput" value="1" step="0.1">
+<button onclick="setSpeed()">Set Speed</button>
+
+<script>
+// Target date
+const countDownDate = new Date("2025-06-09T15:37:25Z").getTime();
+
+// Start with real current time
+let virtualNow = new Date().getTime();
+
+// Default speed
+let speedMultiplier = 1;
+
+// Update speed based on user input
+function setSpeed() {
+  const input = parseFloat(document.getElementById("speedInput").value);
+  if (!isNaN(input)) {
+    speedMultiplier = input;
+  }
+}
+
+// Update timer every 1 second
+const x = setInterval(function () {
+  // Advance virtual time based on speed
+  virtualNow += 1000 * speedMultiplier;
+
+  const distance = countDownDate - virtualNow;
+  const absDistance = Math.abs(distance);
+
+  const days = Math.floor(absDistance / (1000 * 60 * 60 * 24));
+  const hours = Math.floor((absDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const minutes = Math.floor((absDistance % (1000 * 60 * 60)) / (1000 * 60));
+  const seconds = Math.floor((absDistance % (1000 * 60)) / 1000);
+
+  document.getElementById("timer").innerHTML =
+  days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+}, 1000);
+</script>
+
 </body>
 </html>
