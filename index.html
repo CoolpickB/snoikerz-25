@@ -8,16 +8,123 @@
   <link href='https://fonts.googleapis.com/css?family=Kreon' rel='stylesheet'>
   <title>Snoikerz 25</title>
 </head>
-<body>
-  <div class="main">
-    <div style="font-size: 80px;">Time until the Snoikerz 2025 Minecraft server <span class="explode">EXPLODES</span></div>
-    <p id="timer" style="color: #ac4147; font-size: 100px;"></p>
+<body class="main">
+  <div class="front">
+    <div style="font-size: 4rem;">Time until the Snoikerz 2025 Minecraft server <span class="explode">EXPLODES</span></div>
+    <p id="timer" style="color: #ac4147; font-size: 5rem;"></p>
+<div style="font-size: 3rem;">
+  <span id="status"></span>: 
+  <span id="currentlyOnline"></span> 
+  [<span style="color: #ac4147" id="speed"></span>] 
+  <span id="dropdown">
+    <img id="caret" src="public/caret.svg" alt="caret" style="rotate: 180deg; height: 3rem; vertical-align: middle; display:inline-flex; transition: transform 0.2s ease;">
+    <div id="dropdownContent" style="font-size: 2rem; border: 1px #ac4147 solid; border-radius: 5px; padding: 10px">Updates every minute or so</div>
+  </span>
+</div>
+
+
+</div>
   </div>
 </body>
 </html>
 
-<audio src="public\explode.mp3" id="sound" preload="auto"></audio>
+<style>
+.main{
+  background-color: #15090a;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.front{
+  max-width: 50%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Kreon';
+  color: #e4b6b9;
+  gap: 50px;
+  text-align: center;
+}
+#dropdownContent{
+  display:none;
+  position: absolute;
+  left: 50%;
+  margin-top: 30px;
+  transform: translate( -50%);
+}
+#caret{
+  cursor:pointer;
+  rotate: 0deg;
+}
+</style>
 
+<!-- Dropdown -->
+<script>
+const dropdown = document.getElementById('dropdown');
+const dropdownContent = document.getElementById('dropdownContent');
+const caret = document.getElementById('caret');
+
+let open = false;
+
+dropdown.addEventListener('click', () => {
+  open = !open;
+  dropdownContent.style.display = open ? 'flex' : 'none';
+  caret.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+});
+
+</script>
+
+<!-- Player Counter-->
+<script>
+  let playerCount = 0;
+  let speedMultiplier = 1;
+  let serverOnline = true;
+
+  async function getPlayerCount() {
+    try {
+      const response = await fetch('https://api.mcstatus.io/v2/status/java/15.235.36.16:25589');
+
+      if (!response.ok) throw new Error("Bad response");
+
+      const data = await response.json();
+
+      // Check if server is offline or data is missing
+      if (!data.online || data.players == null) {
+        throw new Error("Server reported as offline");
+      }
+
+      // Server is online
+      serverOnline = true;
+      playerCount = data.players.online;
+      const maxPlayers = data.players.max;
+      speedMultiplier = 1 - 0.5 * playerCount;
+
+      document.getElementById('currentlyOnline').textContent =
+        `${playerCount} / ${maxPlayers}`;
+      document.getElementById('speed').textContent = `${speedMultiplier}x`;
+      document.getElementById('status').textContent = "🟢 Online";
+
+    } catch (err) {
+      // Server is offline or request failed
+      serverOnline = false;
+      speedMultiplier = 0; // ⏸ Pause timer
+      document.getElementById('currentlyOnline').textContent = `0 / 0 players online`;
+      document.getElementById('speed').textContent = `0x`;
+      document.getElementById('status').textContent = "🔴 Offline";
+      console.error("Server unreachable:", err.message);
+    }
+  }
+
+  getPlayerCount();
+  setInterval(getPlayerCount, 10000);
+</script>
+
+<!-- Explode -->
+<audio src="public\explode.mp3" id="sound" preload="auto"></audio>
 <script>
   const box = document.querySelectorAll(".explode");
 
@@ -37,42 +144,13 @@ box.forEach((box) => {
 
 </script>
 
-<style>
-.main{
-  background-color: #15090a;
-  height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Kreon';
-  color: #e4b6b9;
-  flex-direction: column;
-  gap: 50px;
-}
-</style>
-
-<!-- Speed Control -->
-<input type="number" id="speedInput" value="1" step="0.1">
-<button onclick="setSpeed()">Set Speed</button>
-
+<!-- Timer -->
 <script>
 // Target date
 const countDownDate = new Date("2025-06-09T15:37:25Z").getTime();
 
 // Start with real current time
 let virtualNow = new Date().getTime();
-
-// Default speed
-let speedMultiplier = 1;
-
-// Update speed based on user input
-function setSpeed() {
-  const input = parseFloat(document.getElementById("speedInput").value);
-  if (!isNaN(input)) {
-    speedMultiplier = input;
-  }
-}
 
 // Update timer every 1 second
 const x = setInterval(function () {
@@ -91,6 +169,3 @@ const x = setInterval(function () {
   days + "d " + hours + "h " + minutes + "m " + seconds + "s";
 }, 1000);
 </script>
-
-</body>
-</html>
