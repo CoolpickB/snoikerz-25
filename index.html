@@ -10,9 +10,9 @@
 </head>
 <body class="main">
   <div class="front">
-    <div style="font-size: clamp(1.5rem, 4vw, 4rem);;">Time until the Snoikerz 2025 Minecraft server <span class="explode">EXPLODES</span></div>
+    <div style="font-size: clamp(1.5rem, 4vw, 4rem);;">Time until the Snoikerz 2025 Minecraft server <span style="cursor:pointer" class="explode">EXPLODES</span></div>
     <p id="timer" style="color: #ac4147; font-size: clamp(2rem, 4.5vw, 5rem);"></p>
-<div style="font-size: clamp(2rem, 3vw, 3rem)">
+    <div style="font-size: clamp(2rem, 3vw, 3rem)">
   <span id="status"></span>: 
   <span id="currentlyOnline"></span> 
   [<span style="color: #ac4147" id="speed"></span>] 
@@ -21,17 +21,22 @@
     <div id="dropdownContent" style="font-size: clamp(1rem, 1.5vw, 2rem); border: 1px #ac4147 solid; border-radius: 5px; padding: 10px">Updates every minute or so</div>
   </span>
 </div>
-
-
-</div>
-  </div>
+<a class="world" href="http://144.217.158.112:8115/"><img src="public\world.png" onclick="window.location.href=''"></a>
 </body>
 </html>
 
 <style>
+.world{
+width: clamp(3rem, 3.5vw, 5rem);
+position: absolute;
+top: 0;
+left: 0;
+margin: 40px;
+cursor: pointer;
+}
 .main{
   background-color: #15090a;
-  height: 100vh;
+  height: 80vh;
   width: 100%;
   display: flex;
   flex-direction: column;
@@ -78,6 +83,27 @@ dropdown.addEventListener('click', () => {
 
 </script>
 
+<!-- Explode -->
+<audio src="public\explode.mp3" id="sound" preload="auto"></audio>
+<script>
+  const box = document.querySelectorAll(".explode");
+
+box.forEach((box) => {
+  const el = box;
+  el.addEventListener("click", () => {
+    const original = document.getElementById(
+      "sound",
+    );
+    if (original) {
+      const clone = original.cloneNode(true);
+      clone.volume = 0.5;
+      clone?.play();
+    }
+  });
+});
+
+</script>
+
 <!-- Player Counter-->
 <script>
   let playerCount = 0;
@@ -86,7 +112,7 @@ dropdown.addEventListener('click', () => {
 
   async function getPlayerCount() {
     try {
-      const response = await fetch('https://api.mcstatus.io/v2/status/java/15.235.36.16:25589');
+      const response = await fetch('https://api.mcstatus.io/v2/status/java/144.217.158.112:25576');
 
       if (!response.ok) throw new Error("Bad response");
 
@@ -123,49 +149,35 @@ dropdown.addEventListener('click', () => {
   setInterval(getPlayerCount, 10000);
 </script>
 
-<!-- Explode -->
-<audio src="public\explode.mp3" id="sound" preload="auto"></audio>
-<script>
-  const box = document.querySelectorAll(".explode");
-
-box.forEach((box) => {
-  const el = box;
-  el.addEventListener("click", () => {
-    const original = document.getElementById(
-      "sound",
-    );
-    if (original) {
-      const clone = original.cloneNode(true);
-      clone.volume = 0.5;
-      clone?.play();
-    }
-  });
-});
-
-</script>
-
 <!-- Timer -->
 <script>
-// Target date
-const countDownDate = new Date("2025-06-09T15:37:25Z").getTime();
+// Target date to count down to
+const countDownDate = new Date("2025-06-11T01:30:00Z").getTime();
+
+// When to start ticking (set your desired start time here)
+const startTickingTime = new Date("2025-05-28T01:30:00Z").getTime();
 
 // Start with real current time
 let virtualNow = new Date().getTime();
 
 // Update timer every 1 second
 const x = setInterval(function () {
-  // Advance virtual time based on speed
   virtualNow += 1000 * speedMultiplier;
 
-  const distance = countDownDate - virtualNow;
-  const absDistance = Math.abs(distance);
+  if (virtualNow >= startTickingTime) {
+    const distance = countDownDate - virtualNow;
+    const absDistance = Math.abs(distance);
 
-  const days = Math.floor(absDistance / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((absDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  const minutes = Math.floor((absDistance % (1000 * 60 * 60)) / (1000 * 60));
-  const seconds = Math.floor((absDistance % (1000 * 60)) / 1000);
+    const days = Math.floor(absDistance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((absDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((absDistance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((absDistance % (1000 * 60)) / 1000);
 
-  document.getElementById("timer").innerHTML =
-  days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+    document.getElementById("timer").innerHTML =
+      days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+  } else {
+    // Optional: show message before countdown starts
+    document.getElementById("timer").innerHTML = "Countdown starts soon...";
+  }
 }, 1000);
 </script>
