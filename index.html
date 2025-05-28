@@ -165,34 +165,37 @@ box1.forEach((box1) => {
 </script>
 
 <!-- Timer -->
+<div id="timer"></div>
 <script>
-// Target date to count down to
-const countDownDate = new Date("2025-06-11T02:00:00Z").getTime();
+  // Define fixed real-world timestamps
+  const countDownDate = new Date("2025-06-11T02:00:00Z").getTime();
+  const startTickingTime = new Date("2025-05-28T02:00:00Z").getTime();
 
-// When to start ticking (set your desired start time here)
-const startTickingTime = new Date("2025-05-28T02:00:00Z").getTime();
+  // Update the timer every 1 second
+  setInterval(() => {
+    const realNow = Date.now();
 
-// Start with real current time
-let virtualNow = new Date().getTime();
+    if (realNow >= startTickingTime) {
+      // How much real time has passed since ticking started
+      const elapsedRealTime = realNow - startTickingTime;
 
-// Update timer every 1 second
-const x = setInterval(function () {
-  virtualNow += 1000 * speedMultiplier;
+      // Apply the speed multiplier to compute virtual time
+      const virtualNow = startTickingTime + elapsedRealTime * speedMultiplier;
 
-  if (virtualNow >= startTickingTime) {
-    const distance = countDownDate - virtualNow;
-    const absDistance = Math.abs(distance);
+      // Time difference between virtual time and target
+      const distance = countDownDate - virtualNow;
+      const absDistance = Math.abs(distance);
 
-    const days = Math.floor(absDistance / (1000 * 60 * 60 * 24));
-    const hours = Math.floor((absDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-    const minutes = Math.floor((absDistance % (1000 * 60 * 60)) / (1000 * 60));
-    const seconds = Math.floor((absDistance % (1000 * 60)) / 1000);
+      const days = Math.floor(absDistance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((absDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((absDistance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((absDistance % (1000 * 60)) / 1000);
 
-    document.getElementById("timer").innerHTML =
-      days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-  } else {
-    // Optional: show message before countdown starts
-    document.getElementById("timer").innerHTML = "Countdown starts soon...";
-  }
-}, 1000);
+      document.getElementById("timer").innerHTML =
+        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+    } else {
+      // Show pre-countdown message
+      document.getElementById("timer").innerHTML = "Countdown starts soon...";
+    }
+  }, 1000);
 </script>
