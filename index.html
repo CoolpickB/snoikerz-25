@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,78 +9,90 @@
   <link href='https://fonts.googleapis.com/css?family=Kreon' rel='stylesheet'>
   <title>Snoikerz 25</title>
 </head>
+
 <body class="main">
   <div class="front">
-    <div style="font-size: clamp(1.5rem, 4vw, 4rem);;">Time until the <span style="cursor:pointer" class="ugh">Snoikerz</span> 2025 Minecraft server <span style="cursor:pointer" class="explode">EXPLODES</span></div>
+    <div style="font-size: clamp(1.5rem, 4vw, 4rem);;">Time until the <span style="cursor:pointer"
+        class="ugh">Snoikerz</span> 2025 Minecraft server <span style="cursor:pointer" class="explode">EXPLODES</span>
+    </div>
     <p id="timer" style="color: #ac4147; font-size: clamp(2rem, 4.5vw, 5rem);"></p>
     <div style="font-size: clamp(2rem, 3vw, 3rem)">
-  <span id="status"></span>: 
-  <span id="currentlyOnline"></span> 
-  [<span style="color: #ac4147" id="speed"></span>] 
-  <span id="dropdown">
-    <img id="caret" src="public/caret.svg" alt="caret" style="rotate: 180deg; height: 3rem; vertical-align: middle; display:inline-flex; transition: transform 0.2s ease;">
-    <div id="dropdownContent" style="font-size: clamp(1rem, 1.5vw, 2rem); border: 1px #ac4147 solid; border-radius: 5px; padding: 10px">Updates every minute or so</div>
-  </span>
-</div>
-<a class="world" href="http://144.217.158.112:8115/"><img src="public\world.png" onclick="window.location.href=''"></a>
+      <span id="status"></span>:
+      <span id="currentlyOnline"></span>
+      [<span style="color: #ac4147" id="speed"></span>]
+      <span id="dropdown">
+        <img id="caret" src="public/caret.svg" alt="caret"
+          style="rotate: 180deg; height: 3rem; vertical-align: middle; display:inline-flex; transition: transform 0.2s ease;">
+        <div id="dropdownContent"
+          style="font-size: clamp(1rem, 1.5vw, 2rem); border: 1px #ac4147 solid; border-radius: 5px; padding: 10px">
+          Updates every minute or so</div>
+      </span>
+    </div>
+    <a class="world" href="http://144.217.158.112:8115/"><img src="public\world.png"
+        onclick="window.location.href=''"></a>
 </body>
+
 </html>
 
 <style>
-.world{
-width: clamp(3rem, 3.5vw, 5rem);
-position: absolute;
-top: 0;
-left: 0;
-margin: 40px;
-cursor: pointer;
-}
-.main{
-  background-color: #15090a;
-  height: 80vh;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.front{
-  max-width: 50%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  font-family: 'Kreon';
-  color: #e4b6b9;
-  gap: 50px;
-  text-align: center;
-}
-#dropdownContent{
-  display:none;
-  position: absolute;
-  left: 50%;
-  margin: 30px 0px;
-  transform: translate( -50%);
-}
-#caret{
-  cursor:pointer;
-  rotate: 0deg;
-}
+  .world {
+    width: clamp(3rem, 3.5vw, 5rem);
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin: 40px;
+    cursor: pointer;
+  }
+
+  .main {
+    background-color: #15090a;
+    height: 80vh;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .front {
+    max-width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Kreon';
+    color: #e4b6b9;
+    gap: 50px;
+    text-align: center;
+  }
+
+  #dropdownContent {
+    display: none;
+    position: absolute;
+    left: 50%;
+    margin: 30px 0px;
+    transform: translate(-50%);
+  }
+
+  #caret {
+    cursor: pointer;
+    rotate: 0deg;
+  }
 </style>
 
 <!-- Dropdown -->
 <script>
-const dropdown = document.getElementById('dropdown');
-const dropdownContent = document.getElementById('dropdownContent');
-const caret = document.getElementById('caret');
+  const dropdown = document.getElementById('dropdown');
+  const dropdownContent = document.getElementById('dropdownContent');
+  const caret = document.getElementById('caret');
 
-let open = false;
+  let open = false;
 
-dropdown.addEventListener('click', () => {
-  open = !open;
-  dropdownContent.style.display = open ? 'flex' : 'none';
-  caret.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
-});
+  dropdown.addEventListener('click', () => {
+    open = !open;
+    dropdownContent.style.display = open ? 'flex' : 'none';
+    caret.style.transform = open ? 'rotate(180deg)' : 'rotate(0deg)';
+  });
 
 </script>
 
@@ -89,34 +102,34 @@ dropdown.addEventListener('click', () => {
 <script>
   const box = document.querySelectorAll(".explode");
 
-box.forEach((box) => {
-  const el = box;
-  el.addEventListener("click", () => {
-    const original = document.getElementById(
-      "sound",
-    );
-    if (original) {
-      const clone = original.cloneNode(true);
-      clone.volume = 0.5;
-      clone?.play();
-    }
+  box.forEach((box) => {
+    const el = box;
+    el.addEventListener("click", () => {
+      const original = document.getElementById(
+        "sound",
+      );
+      if (original) {
+        const clone = original.cloneNode(true);
+        clone.volume = 0.5;
+        clone?.play();
+      }
+    });
   });
-});
   const box1 = document.querySelectorAll(".ugh");
 
-box1.forEach((box1) => {
-  const el = box1;
-  el.addEventListener("click", () => {
-    const original = document.getElementById(
-      "sound1",
-    );
-    if (original) {
-      const clone = original.cloneNode(true);
-      clone.volume = 0.1;
-      clone?.play();
-    }
+  box1.forEach((box1) => {
+    const el = box1;
+    el.addEventListener("click", () => {
+      const original = document.getElementById(
+        "sound1",
+      );
+      if (original) {
+        const clone = original.cloneNode(true);
+        clone.volume = 0.1;
+        clone?.play();
+      }
+    });
   });
-});
 </script>
 
 <!-- Player Counter-->
@@ -164,38 +177,34 @@ box1.forEach((box1) => {
   setInterval(getPlayerCount, 10000);
 </script>
 
-<!-- Timer -->
 <div id="timer"></div>
 <script>
-  // Define fixed real-world timestamps
-  const countDownDate = new Date("2025-06-11T02:00:00Z").getTime();
+  const countDownDate = new Date("2025-06-11T10:00:00Z").getTime();
   const startTickingTime = new Date("2025-05-28T02:00:00Z").getTime();
 
-  // Update the timer every 1 second
-  setInterval(() => {
+  let lastRealNow = Date.now();
+  let virtualNow = startTickingTime;
+
+  const updateTimer = () => {
     const realNow = Date.now();
+    const realElapsed = realNow - lastRealNow;
 
-    if (realNow >= startTickingTime) {
-      // How much real time has passed since ticking started
-      const elapsedRealTime = realNow - startTickingTime;
+    // Increment virtual time based on current speed
+    virtualNow += realElapsed * speedMultiplier;
+    lastRealNow = realNow;
 
-      // Apply the speed multiplier to compute virtual time
-      const virtualNow = startTickingTime + elapsedRealTime * speedMultiplier;
+    const distance = countDownDate - virtualNow;
+    const absDistance = Math.abs(distance);
 
-      // Time difference between virtual time and target
-      const distance = countDownDate - virtualNow;
-      const absDistance = Math.abs(distance);
+    const days = Math.floor(absDistance / (1000 * 60 * 60 * 24));
+    const hours = Math.floor((absDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutes = Math.floor((absDistance % (1000 * 60 * 60)) / (1000 * 60));
+    const seconds = Math.floor((absDistance % (1000 * 60)) / 1000);
 
-      const days = Math.floor(absDistance / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((absDistance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const minutes = Math.floor((absDistance % (1000 * 60 * 60)) / (1000 * 60));
-      const seconds = Math.floor((absDistance % (1000 * 60)) / 1000);
+    document.getElementById("timer").innerHTML =
+      days + "d " + hours + "h " + minutes + "m " + seconds + "s";
+  };
 
-      document.getElementById("timer").innerHTML =
-        days + "d " + hours + "h " + minutes + "m " + seconds + "s";
-    } else {
-      // Show pre-countdown message
-      document.getElementById("timer").innerHTML = "Countdown starts soon...";
-    }
-  }, 1000);
+  // Run update every second
+  setInterval(updateTimer, 1000);
 </script>
